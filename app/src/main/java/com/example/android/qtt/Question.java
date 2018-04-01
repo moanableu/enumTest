@@ -10,17 +10,17 @@ enum QuestionType
 
     // not sure if I need this to assign int values to enums
     // i wanted to used the indexation instead
+/*
+{RADIO(0), CHECKBOX(1), TEXTENTRY(2);
 
-/*{RADIO(0), CHECKBOX(1), TEXTENTRY(2);
+    private int type;
 
-    private int code;
-
-    QuestionType(int code){
-        this.code = code;
+    QuestionType(int type){
+        this.type = type;
     }
 
-    public int getCode(){
-        return code;
+    public int getType(){
+        return type;
     }*/
 }
 
