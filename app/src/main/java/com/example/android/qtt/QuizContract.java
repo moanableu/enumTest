@@ -4,7 +4,7 @@ import android.provider.BaseColumns;
 
 
 /**
- * Created by moanableu on 3/31/2018.
+ * Created by moana on 3/31/2018.
  */
 
 public final class QuizContract {

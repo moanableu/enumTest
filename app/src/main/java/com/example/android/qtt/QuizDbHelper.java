@@ -39,7 +39,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 QuestionsTable.COLUMN_OPTION2 + " TEXT, " +
                 QuestionsTable.COLUMN_OPTION3 + " TEXT, " +
                 QuestionsTable.COLUMN_ANSWERNUMBER + " INTEGER, " +
-                QuestionsTable.COLUMN_TYPE + " INTEGER" +
+                QuestionsTable.COLUMN_TYPE + " TEXT" + //not INTEGER!
                 ")";
 
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
@@ -73,7 +73,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         cv.put(QuestionsTable.COLUMN_OPTION2, question.getOption2());
         cv.put(QuestionsTable.COLUMN_OPTION3, question.getOption3());
         cv.put(QuestionsTable.COLUMN_ANSWERNUMBER, question.getAnswerNumber());
-        //cv.put(QuestionsTable.COLUMN_TYPE, question.getType()); // replaced with following line
+        //set and get enum as string:
         cv.put(QuestionsTable.COLUMN_TYPE, String.valueOf(question.getType()));
         db.insert(QuestionsTable.TABLE_NAME,null, cv);
     }
@@ -91,12 +91,8 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 question.setOption2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION2)));
                 question.setOption3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION3)));
                 question.setAnswerNumber(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWERNUMBER)));
-                //question.setType(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_TYPE)));
-
-                // this is not working :(
-                // getInt can't be applied, but
-                // ',' or ')' expected before QuestionsTable.COLUMN_TYPE
-                question.setType(c.getInt(c.getColumnIndex(String.valueOf() QuestionsTable.COLUMN_TYPE)));
+                //set and get enum as string:
+                question.setType(QuestionType.valueOf(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_TYPE))));
                 questionList.add(question);
             } while (c.moveToNext());
         }
