@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
         int type = (int) questionList.get(questionCounter).getType();
 
-    if ( type == Question.TEXTENTRY) {
+    if ( type == QuestionType.TEXTENTRY) {
         EditText typeAnswer = findViewById(R.id.song_text);
         String typedAnswer = typeAnswer.getText().toString();
 
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         typeAnswer.setText("");
 
         //Checkboxes
-    } else if ( type == Question.CHECKBOX) {
+    } else if ( type == QuestionType.CHECKBOX) {
         CheckBox cb1 = findViewById(R.id.checkbox_1);
         CheckBox cb2 = findViewById(R.id.checkbox_2);
         CheckBox cb3 = findViewById(R.id.checkbox_3);
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         selectedAnswer = " ";
         checkAnswer();
 
-    } else if (type == Question.RADIO){
+    } else if (type == QuestionType.RADIO){
 
         // thinking that here I should add an if statement
         // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
