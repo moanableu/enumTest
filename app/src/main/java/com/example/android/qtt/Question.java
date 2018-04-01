@@ -5,6 +5,7 @@ import java.sql.Types;
 /**
  * Created by moanableu on 3/31/2018.
  */
+enum QuestionType {RADIO, CHECKBOX, TEXTENTRY}
 
 public class Question {
     private String question;
@@ -12,17 +13,18 @@ public class Question {
     private String option2;
     private String option3;
     private int answerNumber;
-    enum QuestionType type {RADIO, CHECKBOX, TEXTENTRY}
+    private QuestionType type;
 
     public Question(){}
 
-    public Question(String question, String option1, String option2, String option3, int answerNumber, QuestionType type) {
+    public Question(String question, String option1, String option2, String option3, int answerNumber,
+                    QuestionType type) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.answerNumber = answerNumber;
-        this.QuestionType = type;
+        this.type = type;
     }
 
     public String getQuestion() {
@@ -65,5 +67,11 @@ public class Question {
         this.answerNumber = answerNumber;
     }
 
+    public QuestionType getType() {
+        return type;
+    }
 
+    public void setType(QuestionType type) {
+        this.type = type;
+    }
 }

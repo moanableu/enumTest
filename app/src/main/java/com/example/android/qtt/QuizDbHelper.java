@@ -70,7 +70,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         cv.put(QuestionsTable.COLUMN_OPTION2, question.getOption2());
         cv.put(QuestionsTable.COLUMN_OPTION3, question.getOption3());
         cv.put(QuestionsTable.COLUMN_ANSWERNUMBER, question.getAnswerNumber());
-        cv.put(QuestionsTable.COLUMN_TYPE, question.getType()); // how can i get this into the tbl if
+        cv.put(QuestionsTable.COLUMN_TYPE, question.getType());
         db.insert(QuestionsTable.TABLE_NAME,null, cv);
     }
 
