@@ -19,6 +19,10 @@ import java.util.List;
 
 import com.example.android.qtt.Question.*;
 
+import static com.example.android.qtt.QuestionType.CHECKBOX;
+import static com.example.android.qtt.QuestionType.RADIO;
+import static com.example.android.qtt.QuestionType.TEXTENTRY;
+
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout checkboxLayout;
@@ -85,12 +89,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!answered){
-                    if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked() ||
-                            cb1.isChecked() || cb2.isChecked() || cb3.isChecked()
-                            //big question, how to verify if text contains "in rainbows"
-                    ){
+                    if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
                         checkAnswer();
-                    } else {
+                    }
+                    // not quite sure how to see if this is unchecked or compare to available valid answers
+                    if  (cb1.isChecked() && cb2.isChecked()) {
+                        checkAnswer();
+                        cb1.setChecked(true); // show correct answer
+                        cb2.setChecked(true); // show correct answer
+                    }
+                    //big question, how to verify if text contains "in rainbows"
+                    if (typeAnswer != null){
+                        checkAnswer();
+                    }
+
+                    else {
                         Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -99,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // prevent keyboard from covering UI when quiz is launched
+        // prevent keyboard from covering UI when quiz is launched -- not sure I'll need this
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
@@ -133,42 +146,54 @@ public class MainActivity extends AppCompatActivity {
         rb2.setTextColor(textColorDefaultRb);
         rb3.setTextColor(textColorDefaultRb);
         rbGroup.clearCheck();
+
         cb1.setTextColor(textColorDefaultRb);
         cb2.setTextColor(textColorDefaultRb);
         cb3.setTextColor(textColorDefaultRb);
+        cb1.setChecked(false);
+        cb2.setChecked(false);
+        cb3.setChecked(false);
+
         typeAnswer.setTextColor(textColorDefaultRb);
+        typeAnswer.getText().clear();
 
         if (questionCounter < getQuestionCounter){
             currentQuestion = questionList.get(questionCounter);
 
             question.setText(currentQuestion.getQuestion());
+
+            // I should be able to call these here, I think
+            // radio options
             rb1.setText(currentQuestion.getOption1());
             rb2.setText(currentQuestion.getOption2());
             rb3.setText(currentQuestion.getOption3());
+
+            // checkbox options
             cb1.setText(currentQuestion.getOption1());
             cb2.setText(currentQuestion.getOption2());
             cb3.setText(currentQuestion.getOption3());
-            typeAnswer(currentQuestion.extractEditText().toString()); // doesn't like this
+
+            // input text
             String answerValue = typeAnswer.getText().toString();
 
-            //switch question formats
-            // the idea is to bring everything from my Array,
-            //     can't define questionType as int here: incompatible type - confused, this is the name of my array
-            // can't find getAllQuestions - if I use that
-            // can't find RADIO  if I use it with questionList
+            // switch question formats
+            // the idea is to bring everything from my Array: getAllQuestions
+            // **** Pseudo code*** :    while we have questions to show,
+            //                          update views - with default colors
 
-            int type = (int)
+            QuestionType type = (String)
 
-            question.setText(currentQuestion.getQuestion()).questionList.get.questionType;
+            question.setText(currentQuestion.getQuestion()).getAllQuestions.get.questionType;
             switch (type) {
-                // seems to like required int...
-                case QuestionType.RADIO:
+                // incompatible types: required int
+                // using RADIO because: 'qualified names of the enum values should not be used in case labels
+                case RADIO:
                     showRadioGroup();
                     break;
-                case QuestionType.CHECKBOX:
+                case CHECKBOX:
                     showCheckboxes();
                     break;
-                case QuestionType.TEXTENTRY:
+                case TEXTENTRY:
                     showTypeAnswer();
                     break;
             }
@@ -177,8 +202,6 @@ public class MainActivity extends AppCompatActivity {
             answered = false;
             buttonConfirmNext.setText("Confirm");
         } else {
-            hideViews();
-        } if (questionCounter == 3){
             finishQuiz();
         }
     }
@@ -197,7 +220,15 @@ public class MainActivity extends AppCompatActivity {
 
         int answerNumber = rbGroup.indexOfChild(rbSelected) +1;
 
-        if (answerNumber == currentQuestion.getAnswerNumber()){
+
+        // this is a tricky one, how to verify that typeAnswer contains "in rainbows"???
+        // or how to check that all possible checkboxes are selected
+        // if I try using QuestionType: 'expression expected' unable to call Question.type 'cose type 'has private access in Question'
+        if (answerNumber == currentQuestion.getAnswerNumber() && QuestionType == RADIO ||
+                answerNumber == currentQuestion.getAnswerNumber() && QuestionType == CHECKBOX) {
+            score++;
+            scoreView.setText("Score: " + score);
+        } if (typeAnswer.getText().toString().equals("in rainbows")) {
             score++;
             scoreView.setText("Score: " + score);
         }
@@ -207,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
     // compare answers to valid answer
     private void showSolution(){
+        //ideally this dims u=invalid answers and blends them into background
         rb1.setTextColor(Color.GRAY);
         rb2.setTextColor(Color.GRAY);
         rb3.setTextColor(Color.GRAY);
@@ -216,62 +248,51 @@ public class MainActivity extends AppCompatActivity {
 
         typeAnswer.setText("in rainbows");
 
+        // Pseudo code get all Qs w/ correct answers - I could do w.out it at this point
+
         // not sure how to cast this to String
-        String answerNumber = questionList.get(questionCounter).toString();
+        //String answerNumber = questionList.get(questionCounter).toString();
 
-        int type = (int) questionList.get(questionCounter).getType();
+        if (getAllQuestions.get.questionType == RADIO) {
 
-    if ( type == QuestionType.TEXTENTRY) {
-        EditText typeAnswer = findViewById(R.id.song_text);
-        String typedAnswer = typeAnswer.getText().toString();
+            // thinking that here I should add an if statement
+            // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
+            switch (currentQuestion.getAnswerNumber()) {
+                case 1:
+                    rb1.setTextColor(Color.WHITE);
+                    question.setText("Answer a) is correct");
+                    break;
+                case 2:
+                    rb2.setTextColor(Color.WHITE);
+                    question.setText("Answer b) is correct");
+                    break;
+                case 3:
+                    rb3.setTextColor(Color.WHITE);
+                    question.setText("Answer c) is correct");
+                    break;
+            }
+        } if (getAllQuestions.get.questionType == CHECKBOX) {
 
-        selectedAnswer = typedAnswer.toLowerCase();
-        checkAnswer(typeAnswer); // (answerNumber.toString()); //unhappy because this is an int :(
-        typeAnswer.setText("");
-
-        //Checkboxes
-    } else if ( type == QuestionType.CHECKBOX) {
-        CheckBox cb1 = findViewById(R.id.checkbox_1);
-        CheckBox cb2 = findViewById(R.id.checkbox_2);
-        CheckBox cb3 = findViewById(R.id.checkbox_3);
-
-        if (cb1.isChecked()){
-            cb1.setChecked(false);
+            // thinking that here I should add an if statement
+            // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
+            switch (currentQuestion.getAnswerNumber()) {
+                case 1:
+                    cb1.setTextColor(Color.WHITE);
+                    question.setText("Answer a) is correct");
+                    break;
+                case 2:
+                    cb2.setTextColor(Color.WHITE);
+                    question.setText("Answer b) is correct");
+                    break;
+                case 3:
+                    cb3.setTextColor(Color.WHITE);
+                    question.setText("Answer c) is correct");
+                    break;
+            }
+        } if (getAllQuestions.get.questionType == TEXTENTRY) {
+            typeAnswer.setText("In Rainbows");
         }
 
-        if (cb2.isChecked()){
-            cb2.setChecked(false);
-        }
-
-        if (cb3.isChecked()){
-            cb3.setChecked(false);
-        }
-
-        selectedAnswer = " ";
-        checkAnswer();
-
-    } else if (type == QuestionType.RADIO){
-
-        // thinking that here I should add an if statement
-        // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
-        switch (currentQuestion.getAnswerNumber()){
-            case 1:
-                rb1.setTextColor(Color.WHITE);
-                question.setText("Answer a) is correct");
-                break;
-            case 2:
-                rb2.setTextColor(Color.WHITE);
-                question.setText("Answer b) is correct");
-                break;
-            case 3:
-                rb3.setTextColor(Color.WHITE);
-                question.setText("Answer c) is correct");
-                break;
-        }
-    }
-
-        // or should the change in question type be handled here?
-        //if (questionCounter < getQuestionCounter && type == CHECKBOX || TEXTENTRY)
         if (questionCounter < getQuestionCounter ){
             // switch here?
             buttonConfirmNext.setText("Next");
@@ -279,8 +300,6 @@ public class MainActivity extends AppCompatActivity {
             buttonConfirmNext.setText("Finish");
         }
     }
-
-
 
     private void finishQuiz(){
         finish();

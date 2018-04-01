@@ -27,20 +27,20 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        this.db = db;
+        public void onCreate(SQLiteDatabase db) {
+            this.db = db;
 
-        //define Db class source OR import class - see QuizContract import
-        final String SQL_CREATE_QUESTIONS_TABLE = "CREATE TABLE " +
-                QuestionsTable.TABLE_NAME + " (" +
-                QuestionsTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                QuestionsTable.COLUMN_QUESTION + " TEXT, " +
-                QuestionsTable.COLUMN_OPTION1 + " TEXT, " +
-                QuestionsTable.COLUMN_OPTION2 + " TEXT, " +
-                QuestionsTable.COLUMN_OPTION3 + " TEXT, " +
-                QuestionsTable.COLUMN_ANSWERNUMBER + " INTEGER, " +
-                QuestionsTable.COLUMN_TYPE + " TEXT" + //not INTEGER!
-                ")";
+            //define Db class source OR import class - see QuizContract import
+            final String SQL_CREATE_QUESTIONS_TABLE = "CREATE TABLE " +
+                    QuestionsTable.TABLE_NAME + " (" +
+                    QuestionsTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    QuestionsTable.COLUMN_QUESTION + " TEXT, " +
+                    QuestionsTable.COLUMN_OPTION1 + " TEXT, " +
+                    QuestionsTable.COLUMN_OPTION2 + " TEXT, " +
+                    QuestionsTable.COLUMN_OPTION3 + " TEXT, " +
+                    QuestionsTable.COLUMN_ANSWERNUMBER + " INTEGER, " +
+                    QuestionsTable.COLUMN_TYPE + " TEXT" + //not INTEGER!
+                    ")";
 
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
         fillQuestionsTable();

@@ -6,23 +6,7 @@ import java.sql.Types;
  * Created by moana on 3/31/2018.
  */
 enum QuestionType
-{RADIO,CHECKBOX, TEXTENTRY
-
-    // not sure if I need this to assign int values to enums
-    // i wanted to used the indexation instead
-/*
-{RADIO(0), CHECKBOX(1), TEXTENTRY(2);
-
-    private int type;
-
-    QuestionType(int type){
-        this.type = type;
-    }
-
-    public int getType(){
-        return type;
-    }*/
-}
+{RADIO,CHECKBOX, TEXTENTRY}
 
 public class Question {
     private String question;
