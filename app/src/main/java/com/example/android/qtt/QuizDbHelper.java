@@ -53,13 +53,16 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     private void fillQuestionsTable(){
-        Question q1 = new Question("1 is correct", "a", "b","c",1,QuestionType.RADIO);
+        Question q1 = new Question("1 is correct", "a", "b","c",1,
+                QuestionType.RADIO);
         addQuestion(q1);
-        Question q2 = new Question("2 is correct", "a", "b","c",2,QuestionType.CHECKBOX);
+        Question q2 = new Question("2 is correct", "a", "b","c",2,
+                QuestionType.CHECKBOX);
         addQuestion(q2);
         // great question how to set this text entry as opposed to Q No. 3
         // solution would be to set this to String
-        Question q3 = new Question("text entry is correct", null, null,null,3,QuestionType.TEXTENTRY);
+        Question q3 = new Question("text entry is correct", null, null,null,3,
+                QuestionType.TEXTENTRY);
         addQuestion(q3);
     }
 
@@ -70,7 +73,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         cv.put(QuestionsTable.COLUMN_OPTION2, question.getOption2());
         cv.put(QuestionsTable.COLUMN_OPTION3, question.getOption3());
         cv.put(QuestionsTable.COLUMN_ANSWERNUMBER, question.getAnswerNumber());
-        //cv.put(QuestionsTable.COLUMN_TYPE, question.getType());
+        //cv.put(QuestionsTable.COLUMN_TYPE, question.getType()); // replaced with following line
         cv.put(QuestionsTable.COLUMN_TYPE, String.valueOf(question.getType()));
         db.insert(QuestionsTable.TABLE_NAME,null, cv);
     }
@@ -89,7 +92,11 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 question.setOption3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION3)));
                 question.setAnswerNumber(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWERNUMBER)));
                 //question.setType(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_TYPE)));
-                question.setType(c.getInt(c.getColumnIndex(QuestionType.values() QuestionsTable.COLUMN_TYPE)));
+
+                // this is not working :(
+                // getInt can't be applied, but
+                // ',' or ')' expected before QuestionsTable.COLUMN_TYPE
+                question.setType(c.getInt(c.getColumnIndex(String.valueOf() QuestionsTable.COLUMN_TYPE)));
                 questionList.add(question);
             } while (c.moveToNext());
         }

@@ -3,9 +3,26 @@ package com.example.android.qtt;
 import java.sql.Types;
 
 /**
- * Created by moanableu on 3/31/2018.
+ * Created by moana on 3/31/2018.
  */
-enum QuestionType {RADIO, CHECKBOX, TEXTENTRY}
+enum QuestionType
+{RADIO,CHECKBOX, TEXTENTRY
+
+    // not sure if I need this to assign int values to enums
+    // i wanted to used the indexation instead
+
+/*{RADIO(0), CHECKBOX(1), TEXTENTRY(2);
+
+    private int code;
+
+    QuestionType(int code){
+        this.code = code;
+    }
+
+    public int getCode(){
+        return code;
+    }*/
+}
 
 public class Question {
     private String question;
