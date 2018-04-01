@@ -14,10 +14,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.example.android.qtt.Question.*;
+import com.example.android.qtt.QuizDbHelper.*;
 
 import static com.example.android.qtt.QuestionType.CHECKBOX;
 import static com.example.android.qtt.QuestionType.RADIO;
@@ -178,12 +180,15 @@ public class MainActivity extends AppCompatActivity {
 
             // switch question formats
             // the idea is to bring everything from my Array: getAllQuestions
+            // but then I receive: 'void cannot be dereferenced' confused as what should I be referencing to to get my type
+            // Question.type can't be resolved
+            // should I use: getClass(Question).questionType ?
             // **** Pseudo code*** :    while we have questions to show,
-            //                          update views - with default colors
+            //                          update views
 
-            QuestionType type = (String)
+            QuestionType type = (QuestionType)
 
-            question.setText(currentQuestion.getQuestion()).getAllQuestions.get.questionType;
+            question.setText(currentQuestion.getQuestion().getAllQuestions.questionType);
             switch (type) {
                 // incompatible types: required int
                 // using RADIO because: 'qualified names of the enum values should not be used in case labels
@@ -250,10 +255,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Pseudo code get all Qs w/ correct answers - I could do w.out it at this point
 
-        // not sure how to cast this to String
-        //String answerNumber = questionList.get(questionCounter).toString();
-
-        if (getAllQuestions.get.questionType == RADIO) {
+        // error: package does not exist if I use 'getAllQuestions' - not sure why the compiler understands this as a package
+        // then I tried using 'ArrayList' then i get this error: 'cannot find symbol variable get'
+        // and 'ArrayList.type' can't resolve 'type'
+        if (ArrayList.get.type == RADIO) {
 
             // thinking that here I should add an if statement
             // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
