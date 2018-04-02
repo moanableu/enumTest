@@ -18,13 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.example.android.qtt.Question.*;
-import com.example.android.qtt.QuizDbHelper.*;
-
-import static com.example.android.qtt.QuestionType.CHECKBOX;
-import static com.example.android.qtt.QuestionType.RADIO;
-import static com.example.android.qtt.QuestionType.TEXTENTRY;
-
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout checkboxLayout;
@@ -84,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // hide views
         hideViews();
 
-        // get Qs
+        // get Questions
         showNextQuestion();
 
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // prevent keyboard from covering UI when quiz is launched -- not sure I'll need this
+        // prevent keyboard from covering UI when quiz is launched -- find how to use it only when EditText is shown!!
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
@@ -184,14 +177,12 @@ public class MainActivity extends AppCompatActivity {
             // Question.type can't be resolved
             // should I use: getClass(Question).questionType ?
             // **** Pseudo code*** :    while we have questions to show,
-            //                          update views
+            //                          update views while hiding other views
 
             // next line updated by RS
             QuestionType type = currentQuestion.getType();
 
-            //question.setText(currentQuestion.getQuestion().getAllQuestions.questionType);
             switch (type) {
-                // incompatible types: required int
                 // using RADIO because: 'qualified names of the enum values should not be used in case labels
                 case RADIO:
                     showRadioGroup();
@@ -235,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.CHECKBOX) {
             score++;
             scoreView.setText("Score: " + score);
-        } if (typeAnswer.getText().toString().equals("in rainbows")) {
+        } if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")); {
             score++;
             scoreView.setText("Score: " + score);
         }
@@ -255,15 +246,10 @@ public class MainActivity extends AppCompatActivity {
 
         typeAnswer.setText("in rainbows");
 
-        // Pseudo code get all Qs w/ correct answers - I could do w.out it at this point
-
-        // error: package does not exist if I use 'getAllQuestions' - not sure why the compiler understands this as a package
-        // then I tried using 'ArrayList' then i get this error: 'cannot find symbol variable get'
-        // and 'ArrayList.type' can't resolve 'type'
+        // this is what calling enums as a class meant:  -- as opposed to 'if (ArrayList.get.type == RADIO)
+        // correction by RS
         if (currentQuestion.getType() == QuestionType.RADIO) {
-        //if (ArrayList.get.type == RADIO) {
 
-            // thinking that here I should add an if statement
             // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
             switch (currentQuestion.getAnswerNumber()) {
                 case 1:
@@ -279,9 +265,9 @@ public class MainActivity extends AppCompatActivity {
                     question.setText("Answer c) is correct");
                     break;
             }
-        } if (currentQuestion.getType() == CHECKBOX) {
+            // add enum as a class - correction by RS
+        } if (currentQuestion.getType() == QuestionType.CHECKBOX) {
 
-            // thinking that here I should add an if statement
             // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
             switch (currentQuestion.getAnswerNumber()) {
                 case 1:
@@ -297,9 +283,9 @@ public class MainActivity extends AppCompatActivity {
                     question.setText("Answer c) is correct");
                     break;
             }
-        } if (currentQuestion.getType() == TEXTENTRY) {
+        } if (currentQuestion.getType() == QuestionType.TEXTENTRY) {
             typeAnswer.setText("In Rainbows");
-        }
+        } hideViews();
 
         if (questionCounter < getQuestionCounter ){
             // switch here?
