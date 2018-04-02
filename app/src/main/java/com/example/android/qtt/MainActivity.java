@@ -186,9 +186,10 @@ public class MainActivity extends AppCompatActivity {
             // **** Pseudo code*** :    while we have questions to show,
             //                          update views
 
-            QuestionType type = (QuestionType)
+            // next line updated by RS
+            QuestionType type = currentQuestion.getType();
 
-            question.setText(currentQuestion.getQuestion().getAllQuestions.questionType);
+            //question.setText(currentQuestion.getQuestion().getAllQuestions.questionType);
             switch (type) {
                 // incompatible types: required int
                 // using RADIO because: 'qualified names of the enum values should not be used in case labels
@@ -229,8 +230,9 @@ public class MainActivity extends AppCompatActivity {
         // this is a tricky one, how to verify that typeAnswer contains "in rainbows"???
         // or how to check that all possible checkboxes are selected
         // if I try using QuestionType: 'expression expected' unable to call Question.type 'cose type 'has private access in Question'
-        if (answerNumber == currentQuestion.getAnswerNumber() && QuestionType == RADIO ||
-                answerNumber == currentQuestion.getAnswerNumber() && QuestionType == CHECKBOX) {
+        // next line updated by RS
+        if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.RADIO ||
+                answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.CHECKBOX) {
             score++;
             scoreView.setText("Score: " + score);
         } if (typeAnswer.getText().toString().equals("in rainbows")) {
@@ -258,7 +260,8 @@ public class MainActivity extends AppCompatActivity {
         // error: package does not exist if I use 'getAllQuestions' - not sure why the compiler understands this as a package
         // then I tried using 'ArrayList' then i get this error: 'cannot find symbol variable get'
         // and 'ArrayList.type' can't resolve 'type'
-        if (ArrayList.get.type == RADIO) {
+        if (currentQuestion.getType() == QuestionType.RADIO) {
+        //if (ArrayList.get.type == RADIO) {
 
             // thinking that here I should add an if statement
             // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
@@ -276,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
                     question.setText("Answer c) is correct");
                     break;
             }
-        } if (getAllQuestions.get.questionType == CHECKBOX) {
+        } if (currentQuestion.getType() == CHECKBOX) {
 
             // thinking that here I should add an if statement
             // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
@@ -294,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
                     question.setText("Answer c) is correct");
                     break;
             }
-        } if (getAllQuestions.get.questionType == TEXTENTRY) {
+        } if (currentQuestion.getType() == TEXTENTRY) {
             typeAnswer.setText("In Rainbows");
         }
 
