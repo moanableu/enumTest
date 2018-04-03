@@ -1,5 +1,6 @@
 package com.example.android.qtt;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -192,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case TEXTENTRY:
                     showTypeAnswer();
+                    //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); // does not resize the keyboards
+                    //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // does not hide the keyboard
                     break;
             }
             questionCounter++;
@@ -288,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
         } hideViews();
 
         if (questionCounter < getQuestionCounter ){
-            // switch here?
             buttonConfirmNext.setText("Next");
         } else {
             buttonConfirmNext.setText("Finish");

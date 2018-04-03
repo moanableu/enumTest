@@ -64,6 +64,9 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         Question q3 = new Question("text entry is correct", null, null,null,3,
                 QuestionType.TEXTENTRY);
         addQuestion(q3);
+        Question q4 = new Question("2 is correct", "a", "b","c",2,
+                QuestionType.RADIO);
+        addQuestion(q4);
     }
 
     private void addQuestion(Question question){
