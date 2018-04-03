@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView cbGroup; // checkbox layout
     private RadioButton rb1, rb2, rb3;
     private String selectedAnswer = "";
-    private CheckBox cb1;
-    private CheckBox cb2;
-    private CheckBox cb3;
-    private EditText typeAnswer;
+    private CheckBox cb1; // added
+    private CheckBox cb2; // added
+    private CheckBox cb3; // added
+    private EditText typeAnswer; // added
     private Button buttonConfirmNext;
 
     private ColorStateList textColorDefaultRb;
@@ -60,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
         rb1 = findViewById(R.id.button_1);
         rb2 = findViewById(R.id.button_2);
         rb3 = findViewById(R.id.button_3);
-        cb1 = findViewById(R.id.checkbox_1);
-        cb2 = findViewById(R.id.checkbox_2);
-        cb3 = findViewById(R.id.checkbox_3);
-        typeAnswer = findViewById(R.id.song_text);
+        cb1 = findViewById(R.id.checkbox_1); // added
+        cb2 = findViewById(R.id.checkbox_2); // added
+        cb3 = findViewById(R.id.checkbox_3); // added
+        typeAnswer = findViewById(R.id.song_text); // added
         buttonConfirmNext = findViewById(R.id.button_continue);
 
         textColorDefaultRb = rb1.getTextColors(); // get default color
@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                     // not quite sure how to see if this is unchecked or compare to available valid answers
                     if  (cb1.isChecked() && cb2.isChecked()) {
                         checkAnswer();
-                        cb1.setChecked(true); // show correct answer
-                        cb2.setChecked(true); // show correct answer
+                        cb1.setChecked(true); // show correct answer - added
+                        cb2.setChecked(true); // show correct answer - added
                     }
                     //big question, how to verify if text contains "in rainbows"
                     if (typeAnswer != null){
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-    private void hideViews(){
+    private void hideViews(){ // added
         rbGroup.setVisibility(View.INVISIBLE);
         cb1.setVisibility(View.INVISIBLE);
         cb2.setVisibility(View.INVISIBLE);
@@ -123,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
     // display RadioGroup
     private void showRadioGroup(){
         rbGroup.setVisibility(View.VISIBLE);
-    }
+    } // added
 
     // display checkboxes
-    private void showCheckboxes(){
+    private void showCheckboxes(){ // added
         cb1.setVisibility(View.VISIBLE);
         cb2.setVisibility(View.VISIBLE);
         cb3.setVisibility(View.VISIBLE);
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     // display EditText
     private void showTypeAnswer(){
         typeAnswer.setVisibility(View.VISIBLE);
-    }
+    } // added
 
     private void showNextQuestion(){
         rb1.setTextColor(textColorDefaultRb);
@@ -143,14 +143,14 @@ public class MainActivity extends AppCompatActivity {
         rb3.setTextColor(textColorDefaultRb);
         rbGroup.clearCheck();
 
-        cb1.setTextColor(textColorDefaultRb);
+        cb1.setTextColor(textColorDefaultRb); // added
         cb2.setTextColor(textColorDefaultRb);
         cb3.setTextColor(textColorDefaultRb);
-        cb1.setChecked(false);
+        cb1.setChecked(false); // added
         cb2.setChecked(false);
         cb3.setChecked(false);
 
-        typeAnswer.setTextColor(textColorDefaultRb);
+        typeAnswer.setTextColor(textColorDefaultRb); // added
         typeAnswer.getText().clear();
 
         if (questionCounter < getQuestionCounter){
@@ -160,12 +160,12 @@ public class MainActivity extends AppCompatActivity {
 
             // I should be able to call these here, I think
             // radio options
-            rb1.setText(currentQuestion.getOption1());
+            rb1.setText(currentQuestion.getOption1()); // added
             rb2.setText(currentQuestion.getOption2());
             rb3.setText(currentQuestion.getOption3());
 
             // checkbox options
-            cb1.setText(currentQuestion.getOption1());
+            cb1.setText(currentQuestion.getOption1()); // added
             cb2.setText(currentQuestion.getOption2());
             cb3.setText(currentQuestion.getOption3());
 
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         answered = true;
 
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
-        cb1 = findViewById(R.id.checkbox_1);
+        cb1 = findViewById(R.id.checkbox_1); //added
         cb2 = findViewById(R.id.checkbox_2);
         cb3 = findViewById(R.id.checkbox_3);
         typeAnswer = findViewById(R.id.song_text);
@@ -239,11 +239,11 @@ public class MainActivity extends AppCompatActivity {
 
     // compare answers to valid answer
     private void showSolution(){
-        //ideally this dims u=invalid answers and blends them into background
+        //ideally this dims invalid answers and blends them into background
         rb1.setTextColor(Color.GRAY);
         rb2.setTextColor(Color.GRAY);
         rb3.setTextColor(Color.GRAY);
-        cb1.setTextColor(Color.GRAY);
+        cb1.setTextColor(Color.GRAY); // added
         cb2.setTextColor(Color.GRAY);
         cb3.setTextColor(Color.GRAY);
 
