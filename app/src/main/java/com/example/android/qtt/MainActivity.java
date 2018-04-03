@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private int score;
     private boolean answered;
 
+    private long backPressTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,9 +203,10 @@ public class MainActivity extends AppCompatActivity {
             questionCountDown.setText("Question: " + questionCounter + "/" + getQuestionCounter);
             answered = false;
             buttonConfirmNext.setText("Confirm");
-        } else {
-            finishQuiz();
-        }
+        } /*else {
+            //finishQuiz();
+            Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     // calculate score
@@ -213,20 +216,26 @@ public class MainActivity extends AppCompatActivity {
         answered = true;
 
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
+        int answerNumber = rbGroup.indexOfChild(rbSelected) +1;
+
+        rb1 = findViewById(R.id.button_1); //added
+        rb2 = findViewById(R.id.button_2);
+        rb3 = findViewById(R.id.button_3);
+
         cb1 = findViewById(R.id.checkbox_1); //added
         cb2 = findViewById(R.id.checkbox_2);
         cb3 = findViewById(R.id.checkbox_3);
         typeAnswer = findViewById(R.id.song_text);
-
-        int answerNumber = rbGroup.indexOfChild(rbSelected) +1;
 
 
         // this is a tricky one, how to verify that typeAnswer contains "in rainbows"???
         // or how to check that all possible checkboxes are selected
         // if I try using QuestionType: 'expression expected' unable to call Question.type 'cose type 'has private access in Question'
         // next line updated by RS
-        if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.RADIO ||
-                answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.CHECKBOX) {
+        if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.RADIO ) {
+            score++;
+            scoreView.setText("Score: " + score);
+        } if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.CHECKBOX){
             score++;
             scoreView.setText("Score: " + score);
         } if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")); {
@@ -293,8 +302,19 @@ public class MainActivity extends AppCompatActivity {
         if (questionCounter < getQuestionCounter ){
             buttonConfirmNext.setText("Next");
         } else {
-            buttonConfirmNext.setText("Finish");
+            buttonConfirmNext.setText("Done!");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressTime + 2000 > System.currentTimeMillis()){
+            finishQuiz();
+        } else {
+            Toast.makeText(this, "Please press back again to finish", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressTime = System.currentTimeMillis();
     }
 
     private void finishQuiz(){

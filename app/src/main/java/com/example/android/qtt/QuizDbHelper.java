@@ -53,20 +53,31 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     private void fillQuestionsTable(){
-        Question q1 = new Question("1 is correct", "a", "b","c",1,
-                QuestionType.RADIO);
+        Question q1 = new Question
+                ("Song that was not part of the ''In Rainbows'' tour?",
+                        "All I Need","Reckoner","House of Cards",2,
+                        QuestionType.RADIO);
         addQuestion(q1);
-        Question q2 = new Question("2 is correct", "a", "b","c",2,
-                QuestionType.CHECKBOX);
+        Question q2 = new Question
+                ("Artwork designer for ''OK Computer''?",
+                        "Stanley Donwood","Dale Atkinson","Galen Cheney",1, QuestionType.RADIO);
         addQuestion(q2);
-        // great question how to set this text entry as opposed to Q No. 3
-        // solution would be to set this to String
-        Question q3 = new Question("text entry is correct", null, null,null,3,
-                QuestionType.TEXTENTRY);
+        Question q3 = new Question
+                ("James Bond movie that rejected a Radiohead song?",
+                        "Skyfall","Spectre","Quantum of Solace",2, QuestionType.RADIO);
         addQuestion(q3);
-        Question q4 = new Question("2 is correct", "a", "b","c",2,
-                QuestionType.RADIO);
+        Question q4 = new Question
+                ("Which album was released for a pay-what-you-want price?",
+                        "In Rainbows", "Hail to the Thief", "OK Computer",1, QuestionType.TEXTENTRY);
         addQuestion(q4);
+        Question q5 = new Question
+                ("Select the first album released by Radiohead",
+                        "OK Computer","The Bends","Pablo Honey",3, QuestionType.RADIO);
+        addQuestion(q5);
+        Question q6 = new Question
+                ("Who in this list has covered Creep?",
+                        "Damien Rice","Amy Winehouse","Moby",2, QuestionType.CHECKBOX);
+        addQuestion(q6);
     }
 
     private void addQuestion(Question question){
