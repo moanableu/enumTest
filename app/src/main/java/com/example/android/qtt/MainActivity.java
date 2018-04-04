@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     if  (cb1.isChecked() || cb2.isChecked() || cb3.isChecked()) {
                         checkAnswer();
                     }
-                    if (typeAnswer != null){
+                    if (!typeAnswer.getText().toString().isEmpty()){
                         checkAnswer();
                     } else {
                         Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
@@ -233,10 +233,12 @@ public class MainActivity extends AppCompatActivity {
         scoreView.setText("Score: " + score);
         }
 
-        if (answerNumber == currentQuestion.getAnswerNumber()  && currentQuestion.getType() == QuestionType.CHECKBOX)
+        else if (answerNumber == currentQuestion.getAnswerNumber()  && currentQuestion.getType() == QuestionType.CHECKBOX)
         {   score++;
             scoreView.setText("Score: " + score);
-        } if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")); {
+        }
+
+        if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")){
             score++;
             scoreView.setText("Score: " + score);
         }

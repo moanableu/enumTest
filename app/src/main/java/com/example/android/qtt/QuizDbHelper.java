@@ -115,3 +115,5 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         return questionList;
     }
 }
+
+//was not in Github - maybe
