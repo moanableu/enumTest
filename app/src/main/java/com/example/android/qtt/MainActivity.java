@@ -3,9 +3,11 @@ package com.example.android.qtt;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,26 +20,27 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout checkboxLayout;
+    private static final long COUNTDOWN_IN_MILLIS = 31000;
 
     private TextView scoreView, questionCountDown, countdown;
     private TextView question;
     private RadioGroup rbGroup;
-    private TextView cbGroup; // checkbox layout
     private RadioButton rb1, rb2, rb3;
     private String selectedAnswer = "";
-    private CheckBox cb1; // added
-    private CheckBox cb2; // added
-    private CheckBox cb3; // added
-    private EditText typeAnswer; // added
+    private CheckBox cb1, cb2, cb3;
+    private EditText typeAnswer;
     private Button buttonConfirmNext;
 
     private ColorStateList textColorDefaultRb;
 
-    //init array list - Question obj has to use same name as array!
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMillis;
+
+    //init array list
     private List<Question> questionList;
     private int questionCounter; // q shown
     private int getQuestionCounter; // ttl q in array
@@ -58,23 +61,21 @@ public class MainActivity extends AppCompatActivity {
         countdown = findViewById(R.id.countdown);
         question = findViewById(R.id.question);
         rbGroup = findViewById(R.id.radio_group);
-        //cbGroup = findViewById(R.id.checkbox_layout);
         rb1 = findViewById(R.id.button_1);
         rb2 = findViewById(R.id.button_2);
         rb3 = findViewById(R.id.button_3);
-        cb1 = findViewById(R.id.checkbox_1); // added
-        cb2 = findViewById(R.id.checkbox_2); // added
-        cb3 = findViewById(R.id.checkbox_3); // added
-        typeAnswer = findViewById(R.id.song_text); // added
+        cb1 = findViewById(R.id.checkbox_1);
+        cb2 = findViewById(R.id.checkbox_2);
+        cb3 = findViewById(R.id.checkbox_3);
+        typeAnswer = findViewById(R.id.song_text);
         buttonConfirmNext = findViewById(R.id.button_continue);
 
         textColorDefaultRb = rb1.getTextColors(); // get default color
 
-
         // init dbHelper
         QuizDbHelper dbHelper = new QuizDbHelper(this);
         questionList = dbHelper.getAllQuestions();
-        getQuestionCounter = questionList.size(); // get count ttl
+        getQuestionCounter = questionList.size();
         Collections.shuffle(questionList);
 
         // hide views
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     // display RadioGroup
     private void showRadioGroup(){
         rbGroup.setVisibility(View.VISIBLE);
-    } // added
+    }
 
     // display checkboxes
     private void showCheckboxes(){ // added
@@ -137,22 +138,16 @@ public class MainActivity extends AppCompatActivity {
     // display EditText
     private void showTypeAnswer(){
         typeAnswer.setVisibility(View.VISIBLE);
-    } // added
+    }
 
     private void showNextQuestion(){
-        rb1.setTextColor(textColorDefaultRb);
-        rb2.setTextColor(textColorDefaultRb);
-        rb3.setTextColor(textColorDefaultRb);
         rbGroup.clearCheck();
 
-        cb1.setTextColor(textColorDefaultRb); // added
-        cb2.setTextColor(textColorDefaultRb);
-        cb3.setTextColor(textColorDefaultRb);
-        cb1.setChecked(false); // added
+        cb1.setChecked(false);
         cb2.setChecked(false);
         cb3.setChecked(false);
 
-        typeAnswer.setTextColor(textColorDefaultRb); // added
+        //typeAnswer.setTextColor(textColorDefaultRb); // added
         typeAnswer.getText().clear();
 
         if (questionCounter < getQuestionCounter){
@@ -160,33 +155,20 @@ public class MainActivity extends AppCompatActivity {
 
             question.setText(currentQuestion.getQuestion());
 
-            // I should be able to call these here, I think
             // radio options
-            rb1.setText(currentQuestion.getOption1()); // added
+            rb1.setText(currentQuestion.getOption1());
             rb2.setText(currentQuestion.getOption2());
             rb3.setText(currentQuestion.getOption3());
 
             // checkbox options
-            cb1.setText(currentQuestion.getOption1()); // added
+            cb1.setText(currentQuestion.getOption1());
             cb2.setText(currentQuestion.getOption2());
             cb3.setText(currentQuestion.getOption3());
-
-            // input text
-            String answerValue = typeAnswer.getText().toString();
-
-            // switch question formats
-            // the idea is to bring everything from my Array: getAllQuestions
-            // but then I receive: 'void cannot be dereferenced' confused as what should I be referencing to to get my type
-            // Question.type can't be resolved
-            // should I use: getClass(Question).questionType ?
-            // **** Pseudo code*** :    while we have questions to show,
-            //                          update views while hiding other views
 
             // next line updated by RS
             QuestionType type = currentQuestion.getType();
 
             switch (type) {
-                // using RADIO because: 'qualified names of the enum values should not be used in case labels
                 case RADIO:
                     showRadioGroup();
                     break;
@@ -195,47 +177,65 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case TEXTENTRY:
                     showTypeAnswer();
-                    //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); // does not resize the keyboards
-                    //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // does not hide the keyboard
                     break;
             }
             questionCounter++;
             questionCountDown.setText("Question: " + questionCounter + "/" + getQuestionCounter);
             answered = false;
+
             buttonConfirmNext.setText("Confirm");
-        } /*else {
-            //finishQuiz();
-            Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
-        }*/
+
+            timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+            startCountDown();
+        } else {
+            finishQuiz();
+        }
+    }
+
+    private void startCountDown(){
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                timeLeftInMillis = 0;
+                updateCountDownText();
+                checkAnswer();
+            }
+        }.start();
+    }
+
+    private void updateCountDownText(){
+        int minutes =(int) (timeLeftInMillis / 1000) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+
+        String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        countdown.setText(timeFormatted);
     }
 
     // calculate score
     private void checkAnswer( ){
-
-        // editText + checkboxes
         answered = true;
+        countDownTimer.cancel();
 
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
         int answerNumber = rbGroup.indexOfChild(rbSelected) +1;
 
-        rb1 = findViewById(R.id.button_1); //added
-        rb2 = findViewById(R.id.button_2);
-        rb3 = findViewById(R.id.button_3);
+        // call to enum updated by Causaelity R.S.
+        if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.RADIO) {
+        score++;
+        scoreView.setText("Score: " + score);
+        }
 
-        cb1 = findViewById(R.id.checkbox_1); //added
+        if (answerNumber == currentQuestion.getAnswerNumber()  && currentQuestion.getType() == QuestionType.CHECKBOX)
+        cb1 = findViewById(R.id.checkbox_1);
         cb2 = findViewById(R.id.checkbox_2);
-        cb3 = findViewById(R.id.checkbox_3);
-        typeAnswer = findViewById(R.id.song_text);
-
-
-        // this is a tricky one, how to verify that typeAnswer contains "in rainbows"???
-        // or how to check that all possible checkboxes are selected
-        // if I try using QuestionType: 'expression expected' unable to call Question.type 'cose type 'has private access in Question'
-        // next line updated by RS
-        if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.RADIO ) {
-            score++;
-            scoreView.setText("Score: " + score);
-        } if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.CHECKBOX){
+        cb3 = findViewById(R.id.checkbox_3); {
             score++;
             scoreView.setText("Score: " + score);
         } if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")); {
@@ -248,50 +248,31 @@ public class MainActivity extends AppCompatActivity {
 
     // compare answers to valid answer
     private void showSolution(){
-        //ideally this dims invalid answers and blends them into background
-        rb1.setTextColor(Color.GRAY);
-        rb2.setTextColor(Color.GRAY);
-        rb3.setTextColor(Color.GRAY);
-        cb1.setTextColor(Color.GRAY); // added
-        cb2.setTextColor(Color.GRAY);
-        cb3.setTextColor(Color.GRAY);
-
-        typeAnswer.setText("in rainbows");
-
-        // this is what calling enums as a class meant:  -- as opposed to 'if (ArrayList.get.type == RADIO)
-        // correction by RS
+        // call to enum updated by Causaelity R.S.
         if (currentQuestion.getType() == QuestionType.RADIO) {
 
             // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
             switch (currentQuestion.getAnswerNumber()) {
                 case 1:
-                    rb1.setTextColor(Color.WHITE);
                     question.setText("Answer a) is correct");
                     break;
                 case 2:
-                    rb2.setTextColor(Color.WHITE);
                     question.setText("Answer b) is correct");
                     break;
                 case 3:
-                    rb3.setTextColor(Color.WHITE);
                     question.setText("Answer c) is correct");
                     break;
             }
-            // add enum as a class - correction by RS
         } if (currentQuestion.getType() == QuestionType.CHECKBOX) {
 
-            // if radiogroup then use this switch statement, else use the next one for cb1, cb2, cb3
             switch (currentQuestion.getAnswerNumber()) {
                 case 1:
-                    cb1.setTextColor(Color.WHITE);
                     question.setText("Answer a) is correct");
                     break;
                 case 2:
-                    cb2.setTextColor(Color.WHITE);
                     question.setText("Answer b) is correct");
                     break;
                 case 3:
-                    cb3.setTextColor(Color.WHITE);
                     question.setText("Answer c) is correct");
                     break;
             }
@@ -315,6 +296,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         backPressTime = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null){
+            countDownTimer.cancel();
+        }
     }
 
     private void finishQuiz(){
