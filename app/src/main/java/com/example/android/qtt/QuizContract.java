@@ -21,3 +21,5 @@ public final class QuizContract {
         public static final String COLUMN_TYPE = "type";
     }
 }
+
+//was not in Github - maybe

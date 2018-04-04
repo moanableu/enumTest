@@ -96,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
                     else if (cb1.isChecked() || cb2.isChecked() || cb3.isChecked()) {
                         checkAnswer();
                     }
+
                     else if (!typeAnswer.getText().toString().isEmpty()) {
+
                         checkAnswer();
                     } else {
                         Toast toast = Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT);
@@ -259,7 +261,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         scoreView.setText("Score: " + score);
-
 
         if (!answeredCorrectly) {
             showSolution();
