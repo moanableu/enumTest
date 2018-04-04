@@ -89,22 +89,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!answered){
                     if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
-                        checkAnswer();
+                        checkAnswer(); // triggers showSolution which in turn triggers hideViews
                     }
                     // not quite sure how to see if this is unchecked or compare to available valid answers
-                    if  (cb1.isChecked() && cb2.isChecked()) {
+                    if  (cb1.isChecked() || cb2.isChecked() || cb3.isChecked()) {
                         checkAnswer();
-                        cb1.setChecked(true); // show correct answer - added
-                        cb2.setChecked(true); // show correct answer - added
                     }
-                    //big question, how to verify if text contains "in rainbows"
                     if (typeAnswer != null){
                         checkAnswer();
-                    }
-
-                    else {
+                    } else {
                         Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
-                    }
+                    } // toast does not come up ever!!
                 } else {
                     showNextQuestion();
                 }
@@ -147,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         cb2.setChecked(false);
         cb3.setChecked(false);
 
-        //typeAnswer.setTextColor(textColorDefaultRb); // added
         typeAnswer.getText().clear();
 
         if (questionCounter < getQuestionCounter){
@@ -165,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             cb2.setText(currentQuestion.getOption2());
             cb3.setText(currentQuestion.getOption3());
 
-            // next line updated by RS
+            // next line updated by Causaelity R.S.
             QuestionType type = currentQuestion.getType();
 
             switch (type) {
@@ -224,6 +218,13 @@ public class MainActivity extends AppCompatActivity {
         countDownTimer.cancel();
 
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
+
+        cb1 = findViewById(R.id.checkbox_1);
+        cb2 = findViewById(R.id.checkbox_2);
+        cb3 = findViewById(R.id.checkbox_3);
+
+        typeAnswer = findViewById(R.id.song_text);
+
         int answerNumber = rbGroup.indexOfChild(rbSelected) +1;
 
         // call to enum updated by Causaelity R.S.
@@ -233,10 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (answerNumber == currentQuestion.getAnswerNumber()  && currentQuestion.getType() == QuestionType.CHECKBOX)
-        cb1 = findViewById(R.id.checkbox_1);
-        cb2 = findViewById(R.id.checkbox_2);
-        cb3 = findViewById(R.id.checkbox_3); {
-            score++;
+        {   score++;
             scoreView.setText("Score: " + score);
         } if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")); {
             score++;

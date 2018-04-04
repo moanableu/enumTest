@@ -134,6 +134,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginVertical="18dp"
         android:freezesText="true"
-        android:text="Confirm" />
+        android:text="" />
 
 </RelativeLayout>
