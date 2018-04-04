@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -90,23 +91,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!answered) {
                     if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked()) {
-                        checkAnswer(); // triggers showSolution which in turn triggers hideViews
+                        checkAnswer();
                     }
-                    // not quite sure how to see if this is unchecked or compare to available valid answers
+
                     else if (cb1.isChecked() || cb2.isChecked() || cb3.isChecked()) {
                         checkAnswer();
                     }
 
                     else if (!typeAnswer.getText().toString().isEmpty()) {
-
                         checkAnswer();
-                    } else {
-                        Toast toast = Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.BOTTOM, 0, 160);
-                        toast.show();
+                    }
 
-                    } // toast does not come up ever!!
-                } else {
+                    else {
+                        Toast toast = Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.BOTTOM, 0, 60);
+                        toast.show();
+                    }
+                }
+
+                else {
                     showNextQuestion();
                 }
             }
@@ -157,8 +160,9 @@ public class MainActivity extends AppCompatActivity {
 
             question.setText(currentQuestion.getQuestion());
 
-            // next line updated by Causaelity R.S.
+            hideViews();
 
+            // Causaelity R.S.: enum call, match question to corresponding switch statement
             switch (currentQuestion.getType()) {
                 case RADIO:
                     showRadioGroup();
@@ -167,15 +171,15 @@ public class MainActivity extends AppCompatActivity {
                     rb2.setText(currentQuestion.getOption2());
                     rb3.setText(currentQuestion.getOption3());
                     break;
+
                 case CHECKBOX:
                     showCheckboxes();
-
                     // checkbox options
                     cb1.setText(currentQuestion.getOption1());
                     cb2.setText(currentQuestion.getOption2());
                     cb3.setText(currentQuestion.getOption3());
-
                     break;
+
                 case TEXTENTRY:
                     showTypeAnswer();
                     break;

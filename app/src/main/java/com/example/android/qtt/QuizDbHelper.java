@@ -17,7 +17,7 @@ import java.util.List;
 
 public class QuizDbHelper extends SQLiteOpenHelper {
     private static final  String DATABASE_NAME = "MyQuizDB";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     //reference to db
     private SQLiteDatabase db;
@@ -78,6 +78,10 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 ("Who in this list has covered Creep?",
                         "Damien Rice","Amy Winehouse","Moby",2, QuestionType.CHECKBOX);
         addQuestion(q6);
+        Question q7 = new Question
+                ("Which song is Radiohead''s most famous song?",
+                        "House of Cards","Street Spirit","Creep",3,QuestionType.RADIO);
+        addQuestion(q7);
     }
 
     private void addQuestion(Question question){
