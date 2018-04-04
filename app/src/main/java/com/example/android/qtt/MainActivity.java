@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Button;
@@ -87,18 +88,21 @@ public class MainActivity extends AppCompatActivity {
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!answered){
-                    if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
+                if (!answered) {
+                    if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked()) {
                         checkAnswer(); // triggers showSolution which in turn triggers hideViews
                     }
                     // not quite sure how to see if this is unchecked or compare to available valid answers
-                    if  (cb1.isChecked() || cb2.isChecked() || cb3.isChecked()) {
+                    else if (cb1.isChecked() || cb2.isChecked() || cb3.isChecked()) {
                         checkAnswer();
                     }
-                    if (typeAnswer != null){
+                    else if (!typeAnswer.getText().toString().isEmpty()) {
                         checkAnswer();
                     } else {
-                        Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.BOTTOM, 0, 160);
+                        toast.show();
+
                     } // toast does not come up ever!!
                 } else {
                     showNextQuestion();
@@ -110,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-    private void hideViews(){ // added
+    private void hideViews() { // added
         rbGroup.setVisibility(View.INVISIBLE);
         cb1.setVisibility(View.INVISIBLE);
         cb2.setVisibility(View.INVISIBLE);
@@ -119,63 +123,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // display RadioGroup
-    private void showRadioGroup(){
+    private void showRadioGroup() {
         rbGroup.setVisibility(View.VISIBLE);
     }
 
     // display checkboxes
-    private void showCheckboxes(){ // added
+    private void showCheckboxes() { // added
         cb1.setVisibility(View.VISIBLE);
         cb2.setVisibility(View.VISIBLE);
         cb3.setVisibility(View.VISIBLE);
     }
 
     // display EditText
-    private void showTypeAnswer(){
+    private void showTypeAnswer() {
         typeAnswer.setVisibility(View.VISIBLE);
     }
 
-    private void showNextQuestion(){
+    private void showNextQuestion() {
         rbGroup.clearCheck();
 
         cb1.setChecked(false);
         cb2.setChecked(false);
         cb3.setChecked(false);
 
+        answered = false;
+
         typeAnswer.getText().clear();
 
-        if (questionCounter < getQuestionCounter){
+        if (questionCounter < getQuestionCounter) {
             currentQuestion = questionList.get(questionCounter);
 
             question.setText(currentQuestion.getQuestion());
 
-            // radio options
-            rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());
-
-            // checkbox options
-            cb1.setText(currentQuestion.getOption1());
-            cb2.setText(currentQuestion.getOption2());
-            cb3.setText(currentQuestion.getOption3());
-
             // next line updated by Causaelity R.S.
-            QuestionType type = currentQuestion.getType();
 
-            switch (type) {
+            switch (currentQuestion.getType()) {
                 case RADIO:
                     showRadioGroup();
+                    // radio options
+                    rb1.setText(currentQuestion.getOption1());
+                    rb2.setText(currentQuestion.getOption2());
+                    rb3.setText(currentQuestion.getOption3());
                     break;
                 case CHECKBOX:
                     showCheckboxes();
+
+                    // checkbox options
+                    cb1.setText(currentQuestion.getOption1());
+                    cb2.setText(currentQuestion.getOption2());
+                    cb3.setText(currentQuestion.getOption3());
+
                     break;
                 case TEXTENTRY:
                     showTypeAnswer();
                     break;
             }
+
             questionCounter++;
             questionCountDown.setText("Question: " + questionCounter + "/" + getQuestionCounter);
-            answered = false;
 
             buttonConfirmNext.setText("Confirm");
 
@@ -186,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startCountDown(){
+    private void startCountDown() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -203,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-    private void updateCountDownText(){
-        int minutes =(int) (timeLeftInMillis / 1000) / 60;
+    private void updateCountDownText() {
+        int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
 
         String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
@@ -213,39 +218,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // calculate score
-    private void checkAnswer( ){
+    private void checkAnswer() {
         answered = true;
         countDownTimer.cancel();
+        boolean answeredCorrectly = false;
 
-        RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
+        int answerNumber = 0;
 
-        cb1 = findViewById(R.id.checkbox_1);
-        cb2 = findViewById(R.id.checkbox_2);
-        cb3 = findViewById(R.id.checkbox_3);
+        switch (currentQuestion.getType()) {
+            case RADIO:
+                RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
+                answerNumber = rbGroup.indexOfChild(rbSelected) + 1;
+                if (answerNumber == currentQuestion.getAnswerNumber()) {
+                    score++;
+                    answeredCorrectly = true;
 
-        typeAnswer = findViewById(R.id.song_text);
+                }
 
-        int answerNumber = rbGroup.indexOfChild(rbSelected) +1;
+                break;
+            case CHECKBOX:
 
-        // call to enum updated by Causaelity R.S.
-        if (answerNumber == currentQuestion.getAnswerNumber() && currentQuestion.getType() == QuestionType.RADIO) {
-        score++;
+                if (cb1.isChecked()) { answerNumber += 1; }
+                if (cb2.isChecked()) { answerNumber += 2; }
+                if (cb3.isChecked()) { answerNumber += 4; }
+
+                if (answerNumber == currentQuestion.getAnswerNumber()) {
+                    score++;
+                    answeredCorrectly = true;
+
+                }
+
+                break;
+            case TEXTENTRY:
+                if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")) {
+                    score++;
+                    answeredCorrectly = true;
+
+                }
+                break;
+        }
+
         scoreView.setText("Score: " + score);
+
+
+        if (!answeredCorrectly) {
+            showSolution();
         }
 
-        if (answerNumber == currentQuestion.getAnswerNumber()  && currentQuestion.getType() == QuestionType.CHECKBOX)
-        {   score++;
-            scoreView.setText("Score: " + score);
-        } if (typeAnswer.getText().toString().equalsIgnoreCase("in rainbows")); {
-            score++;
-            scoreView.setText("Score: " + score);
-        }
-
-        showSolution();
     }
 
     // compare answers to valid answer
-    private void showSolution(){
+    private void showSolution() {
         // call to enum updated by Causaelity R.S.
         if (currentQuestion.getType() == QuestionType.RADIO) {
 
@@ -261,7 +284,8 @@ public class MainActivity extends AppCompatActivity {
                     question.setText("Answer c) is correct");
                     break;
             }
-        } if (currentQuestion.getType() == QuestionType.CHECKBOX) {
+        }
+       else if (currentQuestion.getType() == QuestionType.CHECKBOX) {
 
             switch (currentQuestion.getAnswerNumber()) {
                 case 1:
@@ -274,11 +298,13 @@ public class MainActivity extends AppCompatActivity {
                     question.setText("Answer c) is correct");
                     break;
             }
-        } if (currentQuestion.getType() == QuestionType.TEXTENTRY) {
+        }
+        else if (currentQuestion.getType() == QuestionType.TEXTENTRY) {
             typeAnswer.setText("In Rainbows");
-        } hideViews();
+        }
+        hideViews();
 
-        if (questionCounter < getQuestionCounter ){
+        if (questionCounter < getQuestionCounter) {
             buttonConfirmNext.setText("Next");
         } else {
             buttonConfirmNext.setText("Done!");
@@ -287,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (backPressTime + 2000 > System.currentTimeMillis()){
+        if (backPressTime + 2000 > System.currentTimeMillis()) {
             finishQuiz();
         } else {
             Toast.makeText(this, "Please press back again to finish", Toast.LENGTH_SHORT).show();
@@ -299,12 +325,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (countDownTimer != null){
+        if (countDownTimer != null) {
             countDownTimer.cancel();
         }
     }
 
-    private void finishQuiz(){
+    private void finishQuiz() {
         finish();
     }
 }
