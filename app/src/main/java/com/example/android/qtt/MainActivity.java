@@ -28,11 +28,18 @@ public class MainActivity extends AppCompatActivity {
 
     private static final long COUNTDOWN_IN_MILLIS = 31000;
 
+    // var for savedInstanceState
+/*    private static final String KEY_SCORE = "keyScore";
+    private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
+    private static final String KEY_MILLIS_LEFT = "keyMillisLeft";
+    private static final String KEY_ANSWERED = "keyAnswered";
+    private static final String KEY_QUESTION_LIST = "keyQuestionList";*/
+
     private TextView scoreView, questionCountDown, countdown;
     private TextView question;
     private RadioGroup rbGroup;
     private RadioButton rb1, rb2, rb3;
-    private String selectedAnswer = "";
+    //private String selectedAnswer = "";
     private CheckBox cb1, cb2, cb3;
     private EditText typeAnswer;
     private Button buttonConfirmNext;
@@ -43,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private long timeLeftInMillis;
 
     //init array list
-    private List<Question> questionList;
+    private ArrayList<Question> questionList;
     private int questionCounter; // q shown
     private int getQuestionCounter; // ttl q in array
     private Question currentQuestion; // displayed q
@@ -76,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         // init dbHelper
         QuizDbHelper dbHelper = new QuizDbHelper(this);
-        questionList = dbHelper.getAllQuestions();
+        questionList = (ArrayList <Question>) dbHelper.getAllQuestions();
         getQuestionCounter = questionList.size();
         Collections.shuffle(questionList);
 
@@ -104,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                     else {
                         Toast toast = Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.BOTTOM, 0, 60);
+                        toast.setGravity(Gravity.BOTTOM, 0, 260);
                         toast.show();
                     }
                 }
@@ -251,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
                 if (answerNumber == currentQuestion.getAnswerNumber()) {
                     score++;
                     answeredCorrectly = true;
-
                 }
 
                 break;
@@ -305,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else if (currentQuestion.getType() == QuestionType.TEXTENTRY) {
-            typeAnswer.setText("In Rainbows");
+            question.setText("The album was \nIn Rainbows");
         }
         hideViews();
 
@@ -334,6 +340,16 @@ public class MainActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
     }
+
+/*    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_SCORE,score);
+        outState.putInt(KEY_QUESTION_COUNT, questionCounter);
+        outState.putLong(KEY_MILLIS_LEFT, timeLeftInMillis);
+        outState.putBoolean(KEY_ANSWERED, answered);
+        outState.putParcelableArrayList(KEY_QUESTION_LIST, questionList);
+    }*/
 
     private void finishQuiz() {
         finish();

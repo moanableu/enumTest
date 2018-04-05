@@ -6,6 +6,33 @@
         <item name="colorPrimary">@android:color/background_dark</item>
         <item name="colorPrimaryDark">@android:color/holo_orange_light</item>
         <item name="colorAccent">@android:color/holo_blue_bright</item>
+
+        <item name="android:colorBackground">@color/colorGray</item>
+
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+
+        <item name="android:checkboxStyle">@style/Widget.AppCompat.CompoundButton.CheckBox</item>
+        <item name="android:radioButtonStyle">@style/Widget.AppCompat.CompoundButton.RadioButton</item>
+
     </style>
+
+    <style name="buttons_margins">
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">2dp</item>
+    </style>
+
+    <style name="dividing_lines">
+        <item name="android:layout_marginBottom">@dimen/margin_8dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_8dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

@@ -4,49 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/margin_18dp"
+    android:layout_marginRight="@dimen/margin_18dp"
+    android:layout_marginTop="@dimen/margin_18dp"
     android:background="@color/colorGray"
     tools:context="com.example.android.qtt.MainActivity">
 
     <TextView
         android:id="@+id/score_view"
+        style="@style/buttons_margins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:freezesText="true"
         android:text="Score: 0"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_15sp" />
 
     <TextView
         android:id="@+id/question_count_view"
+        style="@style/buttons_margins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/score_view"
         android:freezesText="true"
         android:text="Question: 1/x"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_15sp" />
 
     <TextView
         android:id="@+id/countdown"
+        style="@style/buttons_margins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:freezesText="true"
         android:text="00:30"
         android:textColor="@android:color/white"
-        android:textSize="40sp" />
+        android:textSize="@dimen/font_26sp" />
 
     <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/countdown"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/margin_30dp"
         android:freezesText="true"
         android:text="question here"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="@dimen/font_26sp" />
 
     <RadioGroup
         android:id="@+id/radio_group"
+        style="@style/buttons_margins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/question"
@@ -55,27 +64,33 @@
 
         <RadioButton
             android:id="@+id/button_1"
+            style="@style/buttons_margins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:freezesText="true"
             android:text="Question 1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_20sp" />
 
         <RadioButton
             android:id="@+id/button_2"
+            style="@style/buttons_margins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:freezesText="true"
             android:text="Question 2"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_20sp" />
 
         <RadioButton
             android:id="@+id/button_3"
+            style="@style/buttons_margins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:freezesText="true"
             android:text="Question 3"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_20sp" />
 
     </RadioGroup>
 
@@ -83,7 +98,11 @@
         android:id="@+id/checkbox_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/question">
+        android:layout_below="@id/question"
+        android:layout_marginLeft="@dimen/margin_18dp"
+        android:layout_marginRight="@dimen/margin_18dp"
+        android:layout_marginTop="@dimen/margin_18dp"
+        android:orientation="vertical">
 
         <CheckBox
             android:id="@+id/checkbox_1"
@@ -92,7 +111,8 @@
             android:layout_centerVertical="true"
             android:freezesText="true"
             android:text="Question 1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_20sp" />
 
         <CheckBox
             android:id="@+id/checkbox_2"
@@ -101,7 +121,8 @@
             android:layout_centerVertical="true"
             android:freezesText="true"
             android:text="Question 2"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_20sp" />
 
         <CheckBox
             android:id="@+id/checkbox_3"
@@ -110,11 +131,13 @@
             android:layout_centerVertical="true"
             android:freezesText="true"
             android:text="Question 3"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_20sp" />
     </LinearLayout>
 
     <EditText
         android:id="@+id/song_text"
+        style="@style/buttons_margins"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/question"
@@ -122,18 +145,21 @@
         android:freezesText="true"
         android:hint="Song"
         android:inputType="text"
-        android:maxLength="12"
+        android:maxLength="11"
         android:textColor="@android:color/holo_orange_light"
         android:textColorHint="@android:color/holo_blue_bright"
-        android:textSize="18dp" />
+        android:textSize="@dimen/font_20sp" />
 
     <Button
         android:id="@+id/button_continue"
+        style="@style/buttons_margins"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginVertical="80dp"
+        android:layout_marginVertical="@dimen/margin_8dp"
         android:freezesText="true"
-        android:text="" />
+        android:text=""
+        android:textColor="@android:color/background_dark"
+        android:textSize="@dimen/font_18sp" />
 
 </RelativeLayout>
