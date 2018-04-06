@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // hide keyboard after input 
+        // hide keyboard after input
         typeAnswer.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void closingToast() {
-        Toast toast = Toast.makeText(MainActivity.this, "Congratulations you scored: " + score + "points" , Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(MainActivity.this, "Congratulations you scored: " + score + " points" , Toast.LENGTH_LONG);
         toast.setGravity(Gravity.BOTTOM, 0, 260);
         toast.show();
     }
