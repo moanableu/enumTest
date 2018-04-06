@@ -286,13 +286,13 @@ public class MainActivity extends AppCompatActivity {
 
             switch (currentQuestion.getAnswerNumber()) {
                 case 1:
-                    question.setText("Answer a) is correct");
+                    question.setText(currentQuestion.getOption1());
                     break;
                 case 2:
-                    question.setText("Answer b) is correct");
+                    question.setText(currentQuestion.getOption2());
                     break;
                 case 3:
-                    question.setText("Answer c) is correct");
+                    question.setText(currentQuestion.getOption3());
                     break;
             }
         }
