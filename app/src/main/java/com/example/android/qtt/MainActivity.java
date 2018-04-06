@@ -93,18 +93,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     else if (!typeAnswer.getText().toString().isEmpty()) {
-                        // not sure why this is not working 
-                        typeAnswer.setOnKeyListener(new View.OnKeyListener() {
-                            @Override
-                            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.hideSoftInputFromWindow(typeAnswer.getWindowToken(),0);
-                                    return true;
-                                }
-                                return false;
-                            }
-                        });
                         checkAnswer();
                     }
 
@@ -118,6 +106,19 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     showNextQuestion();
                 }
+            }
+        });
+
+        // hide keyboard after input 
+        typeAnswer.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(typeAnswer.getWindowToken(),0);
+                    return true;
+                }
+                return false;
             }
         });
     }
