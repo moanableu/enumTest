@@ -5,6 +5,8 @@ import android.provider.BaseColumns;
 
 /**
  * Created by moana on 3/31/2018.
+ * Based on https://developer.android.com/training/data-storage/sqlite.html#java
+ *
  */
 
 public final class QuizContract {
@@ -21,5 +23,3 @@ public final class QuizContract {
         public static final String COLUMN_TYPE = "type";
     }
 }
-
-//was not in Github - maybe

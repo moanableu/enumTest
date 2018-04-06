@@ -12,12 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by moana on 3/31/2018.
+ * Created by moana on 3/31/2018. Create db based on contract
  */
 
 public class QuizDbHelper extends SQLiteOpenHelper {
     private static final  String DATABASE_NAME = "MyQuizDB";
     private static final int DATABASE_VERSION = 4;
+    // currently updating versions manually - have to research a method that will: trigger a call to onCreate
+    // when fillQuestionsTable receives a new question
 
     //reference to db
     private SQLiteDatabase db;
@@ -30,7 +32,6 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         public void onCreate(SQLiteDatabase db) {
             this.db = db;
 
-            //define Db class source OR import class - see QuizContract import
             final String SQL_CREATE_QUESTIONS_TABLE = "CREATE TABLE " +
                     QuestionsTable.TABLE_NAME + " (" +
                     QuestionsTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -52,6 +53,9 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * questions, if a new question is added, only needs to be inserted in this method
+     */
     private void fillQuestionsTable(){
         Question q1 = new Question
                 ("Song that was not part of the ''In Rainbows'' tour?",
@@ -84,6 +88,10 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         addQuestion(q7);
     }
 
+    /**
+     *
+     * @param question get contents per row
+     */
     private void addQuestion(Question question){
         ContentValues cv = new ContentValues();
         cv.put(QuestionsTable.COLUMN_QUESTION, question.getQuestion());
@@ -96,6 +104,9 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         db.insert(QuestionsTable.TABLE_NAME,null, cv);
     }
 
+    /**
+     * @return select entries in table
+     */
     public List<Question> getAllQuestions(){
         List<Question> questionList = new ArrayList <>();
         db = getReadableDatabase();

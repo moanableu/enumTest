@@ -1,15 +1,15 @@
 package com.example.android.qtt;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.sql.Types;
-
 /**
  * Created by moana on 3/31/2018.
  */
+
+/**
+ * to avoid referencing another table enums where implemented
+ */
 enum QuestionType
 {RADIO,CHECKBOX, TEXTENTRY}
+
 
 public class Question  {
     private String question;
@@ -31,39 +31,9 @@ public class Question  {
         this.type = type;
     }
 
-    protected Question(Parcel in) {
-        question = in.readString();
-        option1 = in.readString();
-        option2 = in.readString();
-        option3 = in.readString();
-        answerNumber = in.readInt();
-    }
-
- /*   @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(question);
-        dest.writeString(option1);
-        dest.writeString(option2);
-        dest.writeString(option3);
-        dest.writeInt(answerNumber);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }*/
-
-/*    public static final Creator <Question> CREATOR = new Creator <Question>() {
-        @Override
-        public Question createFromParcel(Parcel in) {
-            return new Question(in);
-        }
-
-        @Override
-        public Question[] newArray(int size) {
-            return new Question[size];
-        }
-    };*/
+    /**
+     * @return getters and setters for columns in table
+     */
 
     public String getQuestion() {
         return question;
@@ -113,4 +83,3 @@ public class Question  {
         this.type = type;
     }
 }
-//was not in Github - maybe
