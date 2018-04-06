@@ -10,7 +10,10 @@ package com.example.android.qtt;
 enum QuestionType
 {RADIO,CHECKBOX, TEXTENTRY}
 
-
+/**
+ * variables, and enum object
+ * thanks to my friend Leslie D. who corrected the way I was setting my enum obj.
+ */
 public class Question  {
     private String question;
     private String option1;

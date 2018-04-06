@@ -107,7 +107,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // hide keyboard after input
+        /**
+         * hide keyboard after input
+         * Jonathan G. implementation details
+         */
         typeAnswer.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -279,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * display solution from string.xml resources: checkbox and textEntry
-     * Causaelity R.S. implementation call to enums
+     * Causaelity R.S. implementation call to enums, else if
      */
     private void showSolution() {
         if (currentQuestion.getType() == QuestionType.RADIO) {
