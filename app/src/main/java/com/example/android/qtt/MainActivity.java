@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView question;
     private RadioGroup rbGroup;
     private RadioButton rb1, rb2, rb3;
-    //private String selectedAnswer = "";
     private CheckBox cb1, cb2, cb3;
     private EditText typeAnswer;
     private Button buttonConfirmNext;
@@ -148,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
         typeAnswer.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * display next question
+     * Causaelity R.S. implementation enum call, match question to corresponding switch statement
+     */
     private void showNextQuestion() {
         rbGroup.clearCheck();
 
@@ -166,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
             hideViews();
 
-            // Causaelity R.S. implementation enum call, match question to corresponding switch statement
             switch (currentQuestion.getType()) {
                 case RADIO:
                     showRadioGroup();
@@ -277,10 +278,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * display solution
+     * display solution from string.xml resources: checkbox and textEntry
+     * Causaelity R.S. implementation call to enums
      */
     private void showSolution() {
-        // Causaelity R.S. implementation call to enums
         if (currentQuestion.getType() == QuestionType.RADIO) {
 
             switch (currentQuestion.getAnswerNumber()) {
@@ -296,10 +297,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
        else if (currentQuestion.getType() == QuestionType.CHECKBOX) {
-            question.setText("Damian Rice and Moby \nhave covered Creep");
+            question.setText(R.string.answerCheckbox);
         }
         else if (currentQuestion.getType() == QuestionType.TEXTENTRY) {
-            question.setText("The album was \nIn Rainbows");
+            question.setText(R.string.answerTextEntry);
         }
         hideViews();
 
@@ -307,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             buttonConfirmNext.setText("Next");
         }
         else {
-            buttonConfirmNext.setText("Done!");
+            buttonConfirmNext.setText("Exit Quiz");
         }
     }
 
@@ -317,6 +318,9 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * double back press required te exit app
+     */
     @Override
     public void onBackPressed() {
         if (backPressTime + 2000 > System.currentTimeMillis()) {
@@ -328,6 +332,9 @@ public class MainActivity extends AppCompatActivity {
         backPressTime = System.currentTimeMillis();
     }
 
+    /**
+     * kill timer to prevent memory leaks
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

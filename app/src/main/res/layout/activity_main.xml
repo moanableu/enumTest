@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Score: 0"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/font_15sp" />
+        android:textSize="@dimen/font_14sp" />
 
     <TextView
         android:id="@+id/question_count_view"
@@ -27,7 +27,7 @@
         android:layout_below="@id/score_view"
         android:text="Question: 1/x"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/font_15sp" />
+        android:textSize="@dimen/font_14sp" />
 
     <TextView
         android:id="@+id/countdown"
@@ -37,7 +37,7 @@
         android:layout_alignParentEnd="true"
         android:text="00:30"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/font_26sp" />
+        android:textSize="@dimen/font_24sp" />
 
     <TextView
         android:id="@+id/question"
@@ -47,7 +47,7 @@
         android:layout_marginTop="@dimen/margin_30dp"
         android:text="question here"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/font_26sp" />
+        android:textSize="@dimen/font_24sp" />
 
     <RadioGroup
         android:id="@+id/radio_group"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Question 1"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20sp" />
+            android:textSize="@dimen/font_18sp" />
 
         <RadioButton
             android:id="@+id/button_2"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="Question 2"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20sp" />
+            android:textSize="@dimen/font_18sp" />
 
         <RadioButton
             android:id="@+id/button_3"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:text="Question 3"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20sp" />
+            android:textSize="@dimen/font_18sp" />
 
     </RadioGroup>
 
@@ -104,7 +104,7 @@
             android:layout_centerVertical="true"
             android:text="Question 1"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20sp" />
+            android:textSize="@dimen/font_18sp" />
 
         <CheckBox
             android:id="@+id/checkbox_2"
@@ -113,7 +113,7 @@
             android:layout_centerVertical="true"
             android:text="Question 2"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20sp" />
+            android:textSize="@dimen/font_18sp" />
 
         <CheckBox
             android:id="@+id/checkbox_3"
@@ -122,7 +122,7 @@
             android:layout_centerVertical="true"
             android:text="Question 3"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20sp" />
+            android:textSize="@dimen/font_18sp" />
     </LinearLayout>
 
     <EditText
@@ -137,7 +137,7 @@
         android:maxLength="11"
         android:textColor="@android:color/holo_orange_light"
         android:textColorHint="@android:color/holo_blue_bright"
-        android:textSize="@dimen/font_20sp" />
+        android:textSize="@dimen/font_18sp" />
 
     <Button
         android:id="@+id/button_continue"
@@ -148,6 +148,6 @@
         android:layout_marginVertical="@dimen/margin_8dp"
         android:text=""
         android:textColor="@android:color/background_dark"
-        android:textSize="@dimen/font_18sp" />
+        android:textSize="@dimen/font_16sp" />
 
 </RelativeLayout>
