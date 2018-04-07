@@ -4,6 +4,13 @@
     <!--  action bar label-->
     <string name="label">Radiohead Quiz</string>
 
+  <!--  question placeholders-->
+    <string name="question1">Question 1</string>
+    <string name="question2">Question 2</string>
+    <string name="question3">Question 3</string>
+    <string name="question_count">Question: 1/x</string>
+    <string name="score">Score: 0</string>
+
    <!-- answers-->
     <string name="answerCheckbox">Damian Rice and Moby have covered \"Creep\"</string>
     <string name="answerTextEntry">The album was \"In Rainbows\"</string>
