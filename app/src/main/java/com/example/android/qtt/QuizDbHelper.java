@@ -12,14 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by moana on 3/31/2018. Create db based on contract
+ * Created by moana on 3/31/2018. Create db using SQL Helper to leverage APIs that will help with DB management.
+ * This can be understood as a data handler
  */
 
 public class QuizDbHelper extends SQLiteOpenHelper {
     private static final  String DATABASE_NAME = "MyQuizDB";
     private static final int DATABASE_VERSION = 4;
-    // currently updating versions manually - have to research a method that will: trigger a call to onCreate
-    // when fillQuestionsTable receives a new question
 
     //reference to db
     private SQLiteDatabase db;
@@ -50,11 +49,12 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + QuestionsTable.TABLE_NAME);
+        // the above line can potentially be replaced by a switch statement where DB versions will update as needed
         onCreate(db);
     }
 
     /**
-     * questions, if a new question is added, only needs to be inserted in this method
+     * questions, if a new question is added here we will need to update database version, a manual process for the time being
      */
     private void fillQuestionsTable(){
         Question q1 = new Question
@@ -90,7 +90,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
 
     /**
      *
-     * @param question get contents per row
+     * @param question
      */
     private void addQuestion(Question question){
         ContentValues cv = new ContentValues();
@@ -105,7 +105,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * @return select entries in table
+     * @return using a Cursor interface to iterate thru questions
      */
     public List<Question> getAllQuestions(){
         List<Question> questionList = new ArrayList <>();

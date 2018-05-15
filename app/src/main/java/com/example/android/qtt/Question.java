@@ -2,16 +2,18 @@ package com.example.android.qtt;
 
 /**
  * Created by moana on 3/31/2018.
+ * Inspired by previous experience implementing a web survey at my last job I wanted to use something similar to SQL.
+ * During my research I found the Coding In Flow Tutorials by Florian Walther.
+ * see https://codinginflow.com/tutorials/android/quiz-app-with-sqlite
  */
 
 /**
- * to avoid referencing another table enums where implemented
+ * to avoid referencing another table enums where implemented.
  */
 enum QuestionType
 {RADIO,CHECKBOX, TEXTENTRY}
 
 /**
- * variables, and enum object
  * thanks to my friend Leslie D. who corrected the way I was setting my enum obj.
  */
 public class Question  {
@@ -35,7 +37,7 @@ public class Question  {
     }
 
     /**
-     * @return getters and setters for columns in table
+     * @return getters and setters
      */
 
     public String getQuestion() {
