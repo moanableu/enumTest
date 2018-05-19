@@ -14,4 +14,8 @@
    <!-- answers-->
     <string name="answerCheckbox">Damian Rice and Moby have covered \"Creep\"</string>
     <string name="answerTextEntry">The album was \"In Rainbows\"</string>
+
+    <string name="dialogTitle">Congratulations!</string>
+    <string name="dialogText">You scored\nWould you like to play again?</string>
+    <string name="dialogCTA">Play Again!</string>
 </resources>

@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * hide keyboard after input
-         * Thanks to Jonathan G. for providing me with implementation details
+         * Thanks to Jonathan G. for implementation details
          */
         typeAnswer.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * display next question
-     * Causaelity R.S. implementation enum call, match question to corresponding switch statement
+     * Thanks to @Causaelity R.S. for enum implementation details, and code review
      */
     private void showNextQuestion() {
         rbGroup.clearCheck();
@@ -235,9 +235,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * calculate score
-     * I wanted to use a boolean to verify answeredCorrectly
-     * @Causaelity R.S. taught me a method  that would make this work for the checkbox score logic without having to hardcode the required answers
-     * by adding answer numbers to match the suggested value using the answerNumber variable we can count with higher flexibility
+     * @Causaelity R.S. taught me a method to verify the checkbox score logic without having to hardcode the required answers
+     * by adding answer numbers to match the suggested value, using the answerNumber variable, we are adding flexibility to this code
      */
     private void checkAnswer() {
         answered = true;
@@ -284,8 +283,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * display solution from string.xml resources: checkbox and textEntry
-     * Thanks to @Causaelity R.S. for his guidance implementing call to enums, and his suggestions using an else if statement
+     * Thanks to @Causaelity R.S. for his guidance implementing call to enums, and code review
      */
     private void showSolution() {
         if (currentQuestion.getType() == QuestionType.RADIO) {
