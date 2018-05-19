@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by moana on 3/31/2018.
+ * Database contract class - specifies database schema
  * Based on https://developer.android.com/training/data-storage/sqlite.html#java
  * and tutorials from Coding in Flow - Florian Walther
  */

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final long COUNTDOWN_IN_MILLIS = 31000;
 
+    // the following variables have been grouped in a logic order such as checkboxes, radiobuttons etc.
     private TextView scoreView, questionCountDown, countdown;
     private TextView question;
     private RadioGroup rbGroup;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * hide keyboard after input
-         * Jonathan G. implementation details
+         * Thanks to Jonathan G. for implementation details
          */
         typeAnswer.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * display next question
-     * Causaelity R.S. implementation enum call, match question to corresponding switch statement
+     * Thanks to @Causaelity R.S. for enum implementation details, and code review
      */
     private void showNextQuestion() {
         rbGroup.clearCheck();
@@ -234,7 +235,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * calculate score
-     * Causaelity implemented boolean answeredCorrectly and checkbox score logic
+     * @Causaelity R.S. taught me a method to verify the checkbox score logic without having to hardcode the required answers
+     * by adding answer numbers to match the suggested value, using the answerNumber variable, we are adding flexibility to this code
      */
     private void checkAnswer() {
         answered = true;
@@ -281,8 +283,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * display solution from string.xml resources: checkbox and textEntry
-     * Causaelity R.S. implementation call to enums, else if
+     * Thanks to @Causaelity R.S. for his guidance implementing call to enums, and code review
      */
     private void showSolution() {
         if (currentQuestion.getType() == QuestionType.RADIO) {

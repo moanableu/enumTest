@@ -35,7 +35,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-<!--    <style name="closingToast">
+<!--    <style name="closingAlert">
         <item name="colorBackground">#2E2E2D</item>
         <item name="textColor">#ffffff</item>
         <item name="iconLeft">@drawable/quiztoast</item>
