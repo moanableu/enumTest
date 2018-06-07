@@ -12,7 +12,7 @@ Learned so much with this!
 <br>The biggest learning curve was how to call enums, once used as a class everything becomes manageable. 
 <br>One thing I am not trying here -looking forward to learn about it- is data persitencecy. 
 <br>I had great help from Leslie D. and Jonathan G. both based in VT -our tech community is great- and fellow scholar @Causaelity who has been a terrific mentor. 
-<br>And of course @iip.udacity – Lip.
+<br>And of course @iip.udacity – Iip.
 
 ![preview](/images/portrait_quiz.jpg)<p>
 ![preview](/images/landscape_quiz_2.jpg)
